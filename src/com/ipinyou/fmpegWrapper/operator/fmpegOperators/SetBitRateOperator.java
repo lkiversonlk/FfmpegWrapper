@@ -4,9 +4,10 @@ import com.ipinyou.fmpegWrapper.operator.FfmpegOperator;
 import com.ipinyou.fmpegWrapper.operator.SegmentType;
 import com.ipinyou.fmpegWrapper.operator.Selector;
 
-public class SetStartPointOperator extends FfmpegOperator {
-	public SetStartPointOperator(Selector selector, double parameter) {
-		super("ss", selector, ""+ parameter, SegmentType.INPUT, SegmentType.OUTPUT);
+public class SetBitRateOperator extends FfmpegOperator {
+
+	public SetBitRateOperator(Selector selector, String parameter) {
+		super("b", selector, parameter, SegmentType.OUTPUT);
 	}
 
 }

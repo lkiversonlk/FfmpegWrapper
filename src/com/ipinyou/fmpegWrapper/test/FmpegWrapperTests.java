@@ -1,6 +1,8 @@
 package com.ipinyou.fmpegWrapper.test;
 
 import java.io.IOException;
+
+import org.junit.Before;
 import org.junit.Test;
 import com.ipinyou.fmpegWrapper.FfmpegCommand;
 import com.ipinyou.fmpegWrapper.FfmpegResult;
@@ -12,7 +14,7 @@ import com.ipinyou.fmpegWrapper.operator.SingleFileHandler;
 import com.ipinyou.fmpegWrapper.operator.fmpegOperators.*;
 
 public class FmpegWrapperTests {
-
+	
 	@Test
 	public void BuildCommandTest() throws FfmpegWrapperException, IOException, InterruptedException{
 		FfmpegCommand command = new FfmpegCommand("/usr/local/bin/ffmpeg");
@@ -61,8 +63,11 @@ public class FmpegWrapperTests {
 		OneToOneCommandBuilder builder = new OneToOneCommandBuilder("/usr/local/bin/ffmpeg");
 		builder.setInputFilePath("/Users/jerry/Downloads/hangzong.flv");
 		builder.setOutputFilePath("/Users/jerry/Downloads/hangzongAspectTest.flv");
-		
 		builder.setSilentMode();
+		
+		builder.cutAudio(20, 100);
+		builder.cutVideo(100, 200);
+		builder.setWidthHeight(1024, 768);
 		builder.setAspect(1, 1);
 		
 		FfmpegResult result = builder.execute();
@@ -82,5 +87,19 @@ public class FmpegWrapperTests {
 		FfmpegResult result = builder.execute();
 		System.out.println(builder.generateCommand());
 		System.out.println(builder.execute().RetCode);
+	}
+	
+	@Test
+	public void CompressUsingBitRateTest() throws IOException, InterruptedException{
+		OneToOneCommandBuilder builder = new OneToOneCommandBuilder("/usr/local/bin/ffmpeg");
+		builder.setInputFilePath("/Users/jerry/Downloads/hangzong.flv");
+		builder.setOutputFilePath("/Users/jerry/Downloads/hangzongCompress3.flv");
+		
+		builder.setVideoBitRate("2k");
+		
+		System.out.println(builder.generateCommand());
+		FfmpegResult result = builder.execute();
+		System.out.println(result.RetCode);
+		
 	}
 }

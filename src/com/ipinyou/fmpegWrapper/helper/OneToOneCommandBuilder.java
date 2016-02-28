@@ -30,17 +30,17 @@ public class OneToOneCommandBuilder {
 		command.addOutputFileOperator(new ScaleVideoOperator(Selector.AllVideoSelector, width, height));
 	}
 	
-	public void cutVideo(int start, int end){
+	public void cutVideo(double start, double end){
 		CommandSegment videoFileHandler = command.getInputSeg().getFileHandlers().get(VideoFileId);
 		cutStream(videoFileHandler, start, end);
 	}
 	
-	public void cutAudio(int start, int end){
+	public void cutAudio(double start, double end){
 		CommandSegment audioFileHandler = command.getInputSeg().getFileHandlers().get(AudioFileId);
 		cutStream(audioFileHandler, start, end);
 	}
 	
-	private void cutStream(CommandSegment fileHandler, int startTime, int endTime){
+	private void cutStream(CommandSegment fileHandler, double startTime, double endTime){
 		fileHandler.addOperator(new SetStartPointOperator(Selector.NoneSelector, startTime));
 		fileHandler.addOperator(new SetEndPointOperator(Selector.NoneSelector, endTime));
 	}
@@ -71,6 +71,10 @@ public class OneToOneCommandBuilder {
 	
 	public FfmpegResult execute() throws IOException, InterruptedException{
 		return command.execute();
+	}
+	
+	public void setVideoBitRate(String bitRate){
+		command.addOutputFileOperator(new SetBitRateOperator(Selector.AllVideoSelector, bitRate));
 	}
 	
 	public void setSilentMode(){

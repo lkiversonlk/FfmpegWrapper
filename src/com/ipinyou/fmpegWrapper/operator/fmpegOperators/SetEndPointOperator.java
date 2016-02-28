@@ -6,7 +6,7 @@ import com.ipinyou.fmpegWrapper.operator.Selector;
 
 public class SetEndPointOperator extends FfmpegOperator {
 
-	public SetEndPointOperator(Selector selector, int endTime) {
+	public SetEndPointOperator(Selector selector, double endTime) {
 		super("t", selector, "" + endTime, SegmentType.INPUT, SegmentType.OUTPUT);
 	}
 
