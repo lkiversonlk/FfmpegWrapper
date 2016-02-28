@@ -22,29 +22,33 @@ public class OneToOneCommandBuilder {
 		command = new FfmpegCommand(ffmpegBinPath);
 	}
 	
-	public void SetOutputVideoCodech264(){
+	public void setOutputVideoCodech264(){
 		command.addOutputFileOperator(new SetCodecOperator(Selector.AllVideoSelector, SetCodecOperator.Codec.libx264));
 	}
 	
-	public void SetWidthHeight(int width, int height){
+	public void setWidthHeight(int width, int height){
 		command.addOutputFileOperator(new ScaleVideoOperator(Selector.AllVideoSelector, width, height));
 	}
 	
-	public void CutVideo(int start, int end){
+	public void cutVideo(int start, int end){
 		CommandSegment videoFileHandler = command.getInputSeg().getFileHandlers().get(VideoFileId);
-		CutStream(videoFileHandler, start, end);
+		cutStream(videoFileHandler, start, end);
 	}
 	
-	public void CutAudio(int start, int end){
+	public void cutAudio(int start, int end){
 		CommandSegment audioFileHandler = command.getInputSeg().getFileHandlers().get(AudioFileId);
-		CutStream(audioFileHandler, start, end);
+		cutStream(audioFileHandler, start, end);
 	}
 	
-	private void CutStream(CommandSegment fileHandler, int startTime, int endTime){
+	private void cutStream(CommandSegment fileHandler, int startTime, int endTime){
 		fileHandler.addOperator(new SetStartPointOperator(Selector.NoneSelector, startTime));
 		fileHandler.addOperator(new SetEndPointOperator(Selector.NoneSelector, endTime));
 	}
 	
+	public void setAudioCodec(SetCodecOperator.Codec codec){
+		command.addOutputFileOperator(new SetCodecOperator(Selector.AllAudioSelector, codec));
+	}
+		
 	public void setInputFilePath(String filePath){
 		command.addInputFileHandler(new SingleFileHandler(SegmentType.INPUT, filePath));
 		command.addInputFileHandler(new SingleFileHandler(SegmentType.INPUT, filePath));
@@ -69,7 +73,7 @@ public class OneToOneCommandBuilder {
 		return command.execute();
 	}
 	
-	public void SetSilentMode(){
+	public void setSilentMode(){
 		command.setSilentMode();
 	}
 }

@@ -44,13 +44,13 @@ public class FmpegWrapperTests {
 		builder.setInputFilePath("/Users/jerry/Downloads/hangzong.flv");
 		builder.setOutputFilePath("/Users/jerry/Downloads/hangzongTest.flv");
 		
-		builder.CutAudio(0, 300);
-		builder.CutVideo(300, 600);
+		builder.cutAudio(0, 300);
+		builder.cutVideo(300, 600);
 		
 		//builder.SetOutputVideoCodech264();
-		builder.SetWidthHeight(400, 400);
+		builder.setWidthHeight(400, 400);
 		builder.setAspect(1, 1);
-		builder.SetSilentMode();
+		builder.setSilentMode();
 		System.out.println(builder.generateCommand());
 		FfmpegResult result = builder.execute();
 		System.out.println(result.RetCode);
@@ -62,7 +62,7 @@ public class FmpegWrapperTests {
 		builder.setInputFilePath("/Users/jerry/Downloads/hangzong.flv");
 		builder.setOutputFilePath("/Users/jerry/Downloads/hangzongAspectTest.flv");
 		
-		builder.SetSilentMode();
+		builder.setSilentMode();
 		builder.setAspect(1, 1);
 		
 		FfmpegResult result = builder.execute();
@@ -76,8 +76,8 @@ public class FmpegWrapperTests {
 		builder.setInputFilePath("/Users/jerry/Downloads/hangzong.flv");
 		builder.setOutputFilePath("/Users/jerry/Downloads/hangzongCodecTest.flv");
 		
-		builder.SetSilentMode();
-		builder.SetOutputVideoCodech264();
+		//builder.SetSilentMode();
+		builder.setOutputVideoCodech264();
 		
 		FfmpegResult result = builder.execute();
 		System.out.println(builder.generateCommand());
